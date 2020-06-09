@@ -1,11 +1,9 @@
 /********************************************************************************
- * project     Solar charge controller with MPPT algorithm                      *
+ * project     Class for initialization and work with High Resolution PWM       *
  *                                                                              *
  * file        Hrpwm.h                                                          *
- * author      Ila Galkin                                                       *
+ * author      Ilya Galkin                                                      *
  * date        13.05.2020                                                       *
- * copyright   The MIT License (MIT)                                            *
- * brief       High resolution PWM                                              *
  *                                                                              *
  ********************************************************************************/
 

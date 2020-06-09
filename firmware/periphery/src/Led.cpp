@@ -1,13 +1,3 @@
-/********************************************************************************
- * project     Solar charge controller with MPPT algorithm                      *
- *                                                                              *
- * file        Led.cpp                                                          *
- * author      Ila Galkin                                                       *
- * date        11.05.2020                                                       *
- * copyright   The MIT License (MIT)                                            *
- * brief       class Led                                                        *
- *                                                                              *
- ********************************************************************************/
 
 /********************************************************************************
  * Include 
@@ -22,7 +12,7 @@
 void Led::Init (void) {
     Gpio::Init<5>(GPIOB, Gpio::Mode::output, Gpio::Type::PP);
     Gpio::Init<15>(GPIOA, Gpio::Mode::output, Gpio::Type::PP); 
-        };
+};
 
 void Led::On (Color led) {
     if (led == Color::green) { Gpio::Set<5>(GPIOB); }

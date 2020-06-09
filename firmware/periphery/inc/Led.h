@@ -1,11 +1,9 @@
 /********************************************************************************
- * project     Solar charge controller with MPPT algorithm                      *
+ * project     Class for initialization and contoller LED                       *
  *                                                                              *
  * file        Led.h                                                            *
- * author      Ila Galkin                                                       *
+ * author      Ilya Galkin                                                      *
  * date        11.05.2020                                                       *
- * copyright   The MIT License (MIT)                                            *
- * brief       class Led                                                        *
  *                                                                              *
  ********************************************************************************/
 

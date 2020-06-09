@@ -1,11 +1,9 @@
 /********************************************************************************
- * project     Solar charge controller with MPPT algorithm                      *
+ * project     Class for initialization clock system                            *
  *                                                                              *
  * file        Clock.h                                                          *
- * author      Ila Galkin                                                       *
+ * author      Ilya Galkin                                                      *
  * date        15.05.2020                                                       *
- * copyright   The MIT License (MIT)                                            *
- * brief       System clock system                                              *
  *                                                                              *
  ********************************************************************************/
 
