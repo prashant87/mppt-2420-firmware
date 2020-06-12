@@ -36,15 +36,12 @@ C_SOURCES =  \
 library/cmsis/src/system_stm32f3xx.c
 
 CXX_SOURCES = \
+system/startup/startupF334.cpp \
 application/src/main.cpp \
 periphery/src/Adc.cpp \
 periphery/src/Clock.cpp \
 periphery/src/Hrpwm.cpp \
 periphery/src/Led.cpp
-
-# ASM sources
-ASM_SOURCES =  \
-system/startup/startup_stm32f334x8.s
 
 #######################################
 # Macros for GCC
@@ -53,10 +50,12 @@ C_DEFS =  \
 -DSTM32F334x8
 
 C_INCLUDES =  \
+system/startup/ \
 library/cmsis/inc \
 application/inc \
 periphery/inc \
 library/
+
  
 #######################################
 # Flags
@@ -70,7 +69,7 @@ ASFLAGS = $(MCU) $(OPTIMIZE) -Wall -fdata-sections -ffunction-sections
 CFLAGS = -c $(MCU) $(DEFS) $(OPTIMIZE) $(addprefix -I,$(C_INCLUDES)) -std=c11 -Wall -fdata-sections -ffunction-sections
 CXXFLAGS = -c $(MCU) $(DEFS) $(OPTIMIZE) $(addprefix -I,$(C_INCLUDES)) -std=c++17 -Wall -fdata-sections -ffunction-sections
 
-LDSCRIPT = $(LD_DIR)STM32F334C8Tx_FLASH.ld
+LDSCRIPT = $(LD_DIR)stm32f334c8t6.ld
 LIBS = -lc -lm -lnosys  
 LDFLAGS = $(MCU) -specs=nosys.specs -T$(LDSCRIPT) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 LDFLAGS += -mcpu=cortex-m4 -mthumb
@@ -83,7 +82,6 @@ endif
 #################################
 # Object List
 #################################
-OBJECTS  = $(addsuffix .o,$(addprefix $(BUILD_DIR)/$(TARGET),$(basename $(ASM_SOURCES))))
 OBJECTS += $(addsuffix .o,$(addprefix $(BUILD_DIR)/$(TARGET),$(basename $(C_SOURCES))))
 OBJECTS += $(addsuffix .o,$(addprefix $(BUILD_DIR)/$(TARGET),$(basename $(CXX_SOURCES))))
 
@@ -103,11 +101,6 @@ $(BUILD_DIR)/$(TARGET)%.o: %.cpp
 	@$(CXX) -c -o $@ $(CXXFLAGS) $<
 
 $(BUILD_DIR)/$(TARGET)%.o: %.c
-	@mkdir -p $(dir $@)
-	@echo $<
-	@$(CC) -c -o $@ $(CFLAGS) $<
-
-$(BUILD_DIR)/$(TARGET)%.o: %.s
 	@mkdir -p $(dir $@)
 	@echo $<
 	@$(CC) -c -o $@ $(CFLAGS) $<

@@ -12,7 +12,8 @@
 				"${workspaceRoot}\\application\\src\\**",
                 "${workspaceRoot}\\application\\inc\\**",
                 "${workspaceRoot}\\periphery\\inc\\**",
-                "${workspaceRoot}\\periphery\\src\\**"
+                "${workspaceRoot}\\periphery\\src\\**",
+                "${workspaceRoot}\\system\\startup\\**"
             ],
             "defines": [
 				"STM32F334x8",

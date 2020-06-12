@@ -90,7 +90,7 @@ public:
         outputPID = tempPID = proportionalComponent + integralComponent + derivativeComponent;
         outputPID = std::min(std::max(outputPID, input.saturation.lowThershold), input.saturation.highThershold);
 
-          return *this;
+        return *this;
     }
 
     float Get() {

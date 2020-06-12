@@ -14,8 +14,8 @@
  ********************************************************************************/
 
 #include "stm32f3xx.h"
+#include "startupF334.h"
 
-#include "interrupt.h"
 #include "Periphery.h"
 
 #include "Pid.h"
