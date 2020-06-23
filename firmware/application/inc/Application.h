@@ -1,9 +1,9 @@
 /********************************************************************************
- * class        Setting periphery for MPPT controller                           *
+ * class        Control and algorithms for application                          *
  *                                                                              *
- * file         Periphery.h                                                     *
+ * file         Application.h                                                   *
  * author       Ilya Galkin                                                     *
- * date         30.05.2020                                                      *
+ * date         23.06.2020                                                      *
  *                                                                              *
  ********************************************************************************/
 
@@ -13,28 +13,21 @@
  * Include 
  ********************************************************************************/
 
+#include "startupF334.h"
+
 #include "Led.h"
-#include "Hrpwm.h"
-#include "Clock.h"
 #include "Adc.h"
+#include "Hrpwm.h"
+
+#include "Pid.h"
+
+#include "Feedback.h"
 
 /********************************************************************************
- * Class Periphery
+ * Class Application
  ********************************************************************************/
 
-class Periphery {
+class Application {
     public:
-        static void Init() {
-            Periphery::ResetHrpwmChannel();
-            Clock::Init();
-            Led::Init();
-            Hrpwm::Init();
-            Adc::Init();
-        }
-
-    private:
-        static void ResetHrpwmChannel() {
-            Gpio::Init<8,9>(GPIOA, Gpio::Mode::output, Gpio::Type::PP); 
-            Gpio::Reset<8,9>(GPIOA);
-        }
+        static void Init();
 };

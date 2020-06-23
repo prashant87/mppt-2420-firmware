@@ -38,6 +38,7 @@ library/cmsis/src/system_stm32f3xx.c
 CXX_SOURCES = \
 system/startup/startupF334.cpp \
 application/src/main.cpp \
+application/src/Application.cpp \
 periphery/src/Adc.cpp \
 periphery/src/Clock.cpp \
 periphery/src/Hrpwm.cpp \
@@ -54,8 +55,8 @@ system/startup/ \
 library/cmsis/inc \
 application/inc \
 periphery/inc \
-library/
-
+library/cmsis \
+library/dsp
  
 #######################################
 # Flags

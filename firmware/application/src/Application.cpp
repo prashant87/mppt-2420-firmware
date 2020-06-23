@@ -1,11 +1,9 @@
 /********************************************************************************
- * project     Solar charge controller with MPPT algorithm                      *
+ * class        Control and algorithms for application                          *
  *                                                                              *
- * file        main.cpp                                                         *
- * author      Ilya Galkin                                                      *
- * date        07.05.2020                                                       *
- * copyright   The MIT License (MIT)                                            *
- * brief       Main program body                                                *
+ * file         Application.cpp                                                 *
+ * author       Ilya Galkin                                                     *
+ * date         23.06.2020                                                      *
  *                                                                              *
  ********************************************************************************/
 
@@ -13,16 +11,12 @@
  * Include 
  ********************************************************************************/
 
-#include "main.h"
+#include "Application.h"
 
 /********************************************************************************
- * Main program body
+ * Class Application
  ********************************************************************************/
 
-int main (void) {
-
-    Periphery::Init();
-    Application::Init();
-
-    while(1) {}
+void Application::Init() {
+    Led::On(Led::Color::yellow);
 }
