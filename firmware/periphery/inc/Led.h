@@ -1,9 +1,9 @@
 /********************************************************************************
- * project     Class for initialization and contoller LED                       *
+ * class        Initialization and contoller LED                                *
  *                                                                              *
- * file        Led.h                                                            *
- * author      Ilya Galkin                                                      *
- * date        11.05.2020                                                       *
+ * file         Led.h                                                           *
+ * author       Ilya Galkin                                                     *
+ * date         11.05.2020                                                      *
  *                                                                              *
  ********************************************************************************/
 
@@ -18,6 +18,9 @@
 
 /********************************************************************************
  * Class
+ * 
+ * PB5  -   Green   -   Led status signal
+ * PA15 -   Yellow  -   Led fault signal
  ********************************************************************************/
 
 class Led {
@@ -33,5 +36,3 @@ class Led {
         static void Off (Color led);
         static void Toggle (Color led);
 };
-
-/********************************* END OF FILE **********************************/
