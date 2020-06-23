@@ -26,7 +26,7 @@ static INLINE void InitializeData() {
     while (pDest < &__bss_end__)
     *pDest++ = 0;
 
-    #ifdef __FPU_USED
+    #ifdef _FPU_ENABLE
         __asm(
             "  LDR.W R0, =0xE000ED88\n"
             "  LDR R1, [R0]\n"

@@ -11,6 +11,8 @@
  * Define 
  ********************************************************************************/
 
+#define _FPU_ENABLE
+
 #define WEAK                __attribute__ ((weak))
 #define INLINE inline       __attribute__((always_inline))
 
