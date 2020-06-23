@@ -1,9 +1,9 @@
 /********************************************************************************
- * project     Class for initialization and read ADC                            *
+ * class        Initialization and read ADC                                     *
  *                                                                              *
- * file        Adc.h                                                            *
- * author      Ilya Galkin                                                      *
- * date        15.05.2020                                                       *
+ * file         Adc.h                                                           *
+ * author       Ilya Galkin                                                     *
+ * date         15.05.2020                                                      *
  *                                                                              *
  ********************************************************************************/
 
@@ -20,12 +20,6 @@
 /********************************************************************************
  * Class ADC
  * 
- * Divider input voltage: 100 kOhm / 5.1 kOhm = 19.6078
- * Divider output voltage to 12V: 100 kOhm / 24 kOhm = 4.1667
- * Divider output voltage to 24V: 100 kOhm / 12 kOhm = 8.3333
- * 
- * Pin control divider - PB14
- * 
  * Pin voltage input    - PA0   - ADC1 IN1
  * Pin current input    - PA1   - ADC1 IN2
  * Pin current output   - PA2   - ADC1 IN3
@@ -35,28 +29,17 @@
  ********************************************************************************/
 
 class Adc {
+    public:
+        constexpr static uint8_t sizeBuffer = 50;
+
+        static uint16_t inputVoltage [sizeBuffer];
+        static uint16_t inputCurrent [sizeBuffer];
+        static uint16_t outputVoltage [sizeBuffer];
+        static uint16_t outputCurrent [sizeBuffer];
+        static uint8_t step;
 
     public:
-        enum class Divider {
-            div12V, div24V
-        };
-
-        constexpr static uint16_t sizeBuffer = 50;
-
-        static float inputVoltage [sizeBuffer];
-        static float inputCurrent [sizeBuffer];
-        static float outputVoltage [sizeBuffer];
-        static float outputCurrent [sizeBuffer];
-        static uint16_t step;
-
-    public:
-        static void SetOutputDivider (Divider divider);
         static void Init();
-
-    private:
-        constexpr static float voltageDivInput = 19.6078f;
-        constexpr static float voltageDivOutput12V = 4.1667f;
-        constexpr static float voltageDivOutput24V = 8.3333f;
 
     private:    
         static void GpioInit();

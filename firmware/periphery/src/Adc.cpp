@@ -5,21 +5,16 @@
 
 #include "Adc.h"
 
-float Adc::inputVoltage [Adc::sizeBuffer];
-float Adc::inputCurrent [Adc::sizeBuffer];
-float Adc::outputVoltage [Adc::sizeBuffer];
-float Adc::outputCurrent [Adc::sizeBuffer];
+uint16_t Adc::inputVoltage [Adc::sizeBuffer];
+uint16_t Adc::inputCurrent [Adc::sizeBuffer];
+uint16_t Adc::outputVoltage [Adc::sizeBuffer];
+uint16_t Adc::outputCurrent [Adc::sizeBuffer];
 
-uint16_t Adc::step = 0;
+uint8_t Adc::step = 0;
 
 /********************************************************************************
  * Class ADC
  ********************************************************************************/
-
-void Adc::SetOutputDivider (Divider divider) {
-    if (divider == Divider::div12V) { GPIOB->BSRR |= GPIO_BSRR_BR_14; }
-    if (divider == Divider::div24V) { GPIOB->BSRR |= GPIO_BSRR_BS_14; }
-}
 
 void Adc::Init() {
     RCC->AHBENR |= RCC_AHBENR_ADC12EN;
@@ -40,7 +35,6 @@ void Adc::Init() {
 }
 
 void Adc::GpioInit() {
-    Gpio::Init<14>(GPIOB, Gpio::Mode::output, Gpio::Type::PP);
     Gpio::Init<0,1,2,3,5>(GPIOA, Gpio::Mode::input);
 }
 
@@ -55,8 +49,8 @@ void Adc::StartCallibrationAdc() {
 
 void Adc::InitTimerEvent() {
     RCC->APB1ENR |= RCC_APB1ENR_TIM6EN;
-    TIM6->PSC = 36000-1;
-    TIM6->ARR = 1000;
+    TIM6->PSC = 1-1;
+    TIM6->ARR = 36;
     TIM6->CR2 |= TIM_CR2_MMS_1;         // Enable generation TRGO for ADC
     TIM6->CR1  |= TIM_CR1_CEN;
 }
@@ -65,14 +59,14 @@ void Adc::InitTimerEvent() {
  * ADC handler
  ********************************************************************************/
 
-void sAdc::handler (void) {
+void sAdc::handler() {
     ADC1->ISR |= ADC_ISR_JEOS;
-    Gpio::Toggle<15>(GPIOA);
 
-    Adc::inputVoltage[Adc::step++] = ADC1->JDR1;
-    Adc::inputCurrent[Adc::step++] = ADC1->JDR2;
-    Adc::outputCurrent[Adc::step++] = ADC1->JDR3;
-    Adc::outputVoltage[Adc::step++] = ADC1->JDR4;
+    Adc::inputVoltage[Adc::step] = ADC1->JDR1;
+    Adc::inputCurrent[Adc::step] = ADC1->JDR2;
+    Adc::outputCurrent[Adc::step] = ADC1->JDR3;
+    Adc::outputVoltage[Adc::step] = ADC1->JDR4;
 
     if (Adc::step >= 50) { Adc::step = 0; } 
+    Adc::step++;
 }
