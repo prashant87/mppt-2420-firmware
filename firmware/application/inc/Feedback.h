@@ -16,6 +16,8 @@
 #include "Adc.h"
 #include "Gpio.h"
 
+#include "FilterWindowMedium.h"
+
 /********************************************************************************
  * Class Feedback
  * 
@@ -36,6 +38,8 @@ class Feedback {
             div12V, div24V
         };
 
+        static bool statusOutputDivider;
+
     public:
         static void InitGpioDivider() {
             Gpio::Init<14>(GPIOB, Gpio::Mode::output, Gpio::Type::PP);
@@ -53,7 +57,8 @@ class Feedback {
         }      
 
         static float GetInputVoltage() {
-            return (voltageDivInput * sampleStepAdc * Adc::inputVoltage[0]);
+            float inputVoltage = FilterWindowMedium::FilterCompute(Adc::inputVoltage, Adc::sizeBuffer);
+            return (voltageDivInput * sampleStepAdc * inputVoltage + staticErrorInputVoltage);
         }
 
         static float GetInputCurrent() {
@@ -62,9 +67,11 @@ class Feedback {
 
         static float GetOutputVoltage() {
             if (statusOutputDivider) {
-                return (voltageDivOutput24V * sampleStepAdc * Adc::outputVoltage[0]);
+                float outputVoltage = FilterWindowMedium::FilterCompute(Adc::outputVoltage, Adc::sizeBuffer);
+                return (voltageDivOutput24V * sampleStepAdc * outputVoltage);
             } else {
-                return (voltageDivOutput12V * sampleStepAdc * Adc::outputVoltage[0]);
+                float outputVoltage = FilterWindowMedium::FilterCompute(Adc::outputVoltage, Adc::sizeBuffer);
+                return (voltageDivOutput12V * sampleStepAdc * outputVoltage);
             }
         }
 
@@ -79,5 +86,5 @@ class Feedback {
         constexpr static float voltageDivInput = 20.6078431f;
         constexpr static float voltageDivOutput12V = 5.1666666f;
         constexpr static float voltageDivOutput24V = 9.3333333f;
-        static bool statusOutputDivider;
+        constexpr static float staticErrorInputVoltage = 0.225f;
 };
