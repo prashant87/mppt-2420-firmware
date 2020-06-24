@@ -25,9 +25,28 @@
 
 /********************************************************************************
  * Class Application
+ * 
+ * High speed handler   -   2 kHz
+ * Low speed handler    -   1 Hz
+ * 
  ********************************************************************************/
 
 class Application {
     public:
+        struct UserSettings {
+            static float thresholdUVLO;
+            static float outputVoltage;
+        };
+    
+    static uint16_t dutyBuck;
+        
+    public:
         static void Init();
+        static void UVLO (float reference);
+
+    private:
+        static void StartUVLO (float reference);
+        static void StartHighSpeedProcessing();
+        static void StartLowSpeedProcessing();
+
 };
