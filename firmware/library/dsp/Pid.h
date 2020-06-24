@@ -1,11 +1,9 @@
 /********************************************************************************
- * project     Solar charge controller with MPPT algorithm                      *
+ * class        PID controller with limit and anti-windup                       *
  *                                                                              *
- * file        Pid.h                                                            *
- * author      Ilya Galkin                                                       *
- * date        03.06.2020                                                       *
- * copyright   The MIT License (MIT)                                            *
- * brief       PID controller	                                                *
+ * file         Pid.h                                                           *
+ * author       Ilya Galkin                                                     *
+ * date         03.06.2020                                                      *
  *                                                                              *
  ********************************************************************************/
 
