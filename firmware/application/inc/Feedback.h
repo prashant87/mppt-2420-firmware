@@ -57,7 +57,7 @@ class Feedback {
         }      
 
         static float GetInputVoltage() {
-            float inputVoltage = FilterWindowMedium::FilterCompute(Adc::inputVoltage, Adc::sizeBuffer);
+            float inputVoltage = FilterWindowMedium::Compute(Adc::inputVoltage, Adc::sizeBuffer);
             return (voltageDivInput * sampleStepAdc * inputVoltage + staticErrorInputVoltage);
         }
 
@@ -67,10 +67,10 @@ class Feedback {
 
         static float GetOutputVoltage() {
             if (statusOutputDivider) {
-                float outputVoltage = FilterWindowMedium::FilterCompute(Adc::outputVoltage, Adc::sizeBuffer);
+                float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer);
                 return (voltageDivOutput24V * sampleStepAdc * outputVoltage);
             } else {
-                float outputVoltage = FilterWindowMedium::FilterCompute(Adc::outputVoltage, Adc::sizeBuffer);
+                float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer);
                 return (voltageDivOutput12V * sampleStepAdc * outputVoltage);
             }
         }
