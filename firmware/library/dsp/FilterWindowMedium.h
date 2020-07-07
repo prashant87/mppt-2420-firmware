@@ -13,7 +13,7 @@
  * Include 
  ********************************************************************************/
 
-#include "SortArray.h"
+#include "FastSort.h"
 
 /********************************************************************************
  * Class Filter
@@ -21,14 +21,18 @@
 
 class FilterWindowMedium {
     public:
-        static float Compute (uint16_t array[], uint8_t size) {
-            float sumResult = 0;
+        static float Compute (uint16_t *array, uint16_t size, uint16_t window) {
+            FastSort::Recursive(array, size);
 
-            for (uint8_t i = 0; i < size; i++) {
-                sumResult = sumResult + array[i];
-            }
+            float dataBuffer = 0.0f;
             
-            float result = sumResult / size;
-            return result;
+            uint16_t highLimit = (size / 2) + (window / 2);
+            uint16_t lowLimit = (size / 2) - (window / 2);
+
+            for (uint16_t i = lowLimit; i < highLimit; i++) {
+                dataBuffer += array[i];
+            }
+
+            return (static_cast<float>(dataBuffer / window));
         }
 };
