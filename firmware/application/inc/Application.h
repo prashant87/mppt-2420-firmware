@@ -42,10 +42,8 @@ class Application {
         
     public:
         static void Init();
-        static void UVLO (float reference);
 
     private:
-        static void StartUVLO (float reference);
         static void StartHighSpeedProcessing();
         static void StartLowSpeedProcessing();
 
