@@ -38,6 +38,13 @@ class Adc {
         static uint16_t outputCurrent [sizeBuffer];
         static uint8_t step;
 
+        struct Status {
+            static bool stopInputVoltage;
+            static bool stopInputCurrent;
+            static bool stopOutputVoltage;
+            static bool stopOutputCurrent;
+        };
+
     public:
         static void Init();
 

@@ -12,6 +12,11 @@ uint16_t Adc::outputCurrent [Adc::sizeBuffer];
 
 uint8_t Adc::step = 0;
 
+bool Adc::Status::stopInputVoltage = false;
+bool Adc::Status::stopInputCurrent = false;
+bool Adc::Status::stopOutputVoltage = false;
+bool Adc::Status::stopOutputCurrent = false;
+
 /********************************************************************************
  * Class ADC
  ********************************************************************************/
@@ -62,10 +67,10 @@ void Adc::InitTimerEvent() {
 void sAdc::handler() {
     ADC1->ISR |= ADC_ISR_JEOS;
 
-    Adc::inputVoltage[Adc::step] = ADC1->JDR1;
-    Adc::inputCurrent[Adc::step] = ADC1->JDR2;
-    Adc::outputCurrent[Adc::step] = ADC1->JDR3;
-    Adc::outputVoltage[Adc::step] = ADC1->JDR4;
+    if (!Adc::Status::stopInputVoltage) { Adc::inputVoltage[Adc::step] = ADC1->JDR1; }
+    if (!Adc::Status::stopInputCurrent) { Adc::inputCurrent[Adc::step] = ADC1->JDR2; }
+    if (!Adc::Status::stopOutputCurrent) { Adc::outputCurrent[Adc::step] = ADC1->JDR3; }
+    if (!Adc::Status::stopOutputVoltage) { Adc::outputVoltage[Adc::step] = ADC1->JDR4; }
 
     if (Adc::step >= 50) { Adc::step = 0; } 
     Adc::step++;
