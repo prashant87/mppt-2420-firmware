@@ -39,6 +39,7 @@ class Feedback {
         };
 
         static bool statusOutputDivider;
+        constexpr static uint16_t sizeWindow = 20;
 
     public:
         static void InitGpioDivider() {
@@ -57,7 +58,9 @@ class Feedback {
         }      
 
         static float GetInputVoltage() {
-            float inputVoltage = FilterWindowMedium::Compute(Adc::inputVoltage, Adc::sizeBuffer);
+            Adc::Status::stopInputVoltage = true;
+            float inputVoltage = FilterWindowMedium::Compute(Adc::inputVoltage, Adc::sizeBuffer, sizeWindow);
+            Adc::Status::stopInputVoltage = false;
             return (voltageDivInput * sampleStepAdc * inputVoltage + staticErrorInputVoltage);
         }
 
@@ -67,10 +70,14 @@ class Feedback {
 
         static float GetOutputVoltage() {
             if (statusOutputDivider) {
-                float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer);
+                Adc::Status::stopOutputVoltage = true;
+                float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer, sizeWindow);
+                Adc::Status::stopOutputVoltage = false;
                 return (voltageDivOutput24V * sampleStepAdc * outputVoltage);
             } else {
-                float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer);
+                Adc::Status::stopOutputVoltage = true;
+                float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer, sizeWindow);
+                Adc::Status::stopOutputVoltage = false;
                 return (voltageDivOutput12V * sampleStepAdc * outputVoltage);
             }
         }
