@@ -2,7 +2,7 @@
  * class        Control and algorithms for application                          *
  *                                                                              *
  * file         Application.cpp                                                 *
- * author       Ilya Galkin                                                     *
+ * author       @RedCommissary                                                  *
  * date         23.06.2020                                                      *
  *                                                                              *
  ********************************************************************************/
@@ -17,27 +17,21 @@
  * Variables 
  ********************************************************************************/
 
-namespace Status {
-    struct Flags {
-        static bool errorUVLO;
-    };
-} 
-
-float Application::UserSettings::thresholdUVLO = 0.0f;
 float Application::UserSettings::outputVoltage = 0.0f;
-bool Status::Flags::errorUVLO = false;
+float Application::UserSettings::outputCurrent = 0.0f;
 uint16_t Application::dutyBuck = 0;
 bool Feedback::statusOutputDivider = false;
 
 PidController pidVoltageMode;
+PidController pidCurrentMode;
 
 /********************************************************************************
  * Class Application
  ********************************************************************************/
 
 void Application::Init() {
-    Application::UserSettings::thresholdUVLO = 14.5f;
-    Application::UserSettings::outputVoltage = 12.0f;
+    Application::UserSettings::outputVoltage = 14.4f;
+    Application::UserSettings::outputCurrent = 5.0f;
     Feedback::SetOutputDivider(Feedback::Divider::div12V);
 
     Application::StartLowSpeedProcessing();
@@ -75,17 +69,30 @@ void Application::StartLowSpeedProcessing() {
 void sTim3::handler (void) {
     TIM3->SR &= ~TIM_SR_UIF;
 
+    float resultPID = 0.0f;
+
     float outputVoltage = Feedback::GetOutputVoltage();
+    float outputCurrent = Feedback::GetOutputCurrent();
 
-    pidVoltageMode
-        .SetReference(Application::UserSettings::outputVoltage)
-        .SetSaturation(-40000, 40000)
-        .SetFeedback(outputVoltage, 0.0002)
-        .SetCoefficient(100,0,0,0,0)
-        .Compute();
+    if (outputVoltage < (Application::UserSettings::outputVoltage - 0.2f)) {
+        pidCurrentMode
+            .SetReference(Application::UserSettings::outputCurrent)
+            .SetSaturation(-40000, 40000)
+            .SetFeedback(outputCurrent, 0.0002)
+            .SetCoefficient(10, 0, 0, 0, 0)
+            .Compute();
+        resultPID = pidCurrentMode.Get();
+    } else {
+        pidVoltageMode
+            .SetReference(Application::UserSettings::outputVoltage)
+            .SetSaturation(-40000, 40000)
+            .SetFeedback(outputVoltage, 0.0002)
+            .SetCoefficient(50, 0, 0, 0, 0)
+            .Compute();
+        resultPID = pidVoltageMode.Get();
+    }
 
-    Application::dutyBuck += pidVoltageMode.Get();
-
+    Application::dutyBuck += resultPID;
     Hrpwm::SetDuty(Application::dutyBuck);
 }
 

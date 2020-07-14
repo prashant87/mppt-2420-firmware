@@ -2,7 +2,7 @@
  * class        Control and algorithms for application                          *
  *                                                                              *
  * file         Application.h                                                   *
- * author       Ilya Galkin                                                     *
+ * author       @RedCommissary                                                  *
  * date         23.06.2020                                                      *
  *                                                                              *
  ********************************************************************************/
@@ -34,11 +34,11 @@
 class Application {
     public:
         struct UserSettings {
-            static float thresholdUVLO;
             static float outputVoltage;
+            static float outputCurrent;
         };
     
-    static uint16_t dutyBuck;
+        static uint16_t dutyBuck;
         
     public:
         static void Init();
