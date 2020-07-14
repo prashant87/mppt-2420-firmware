@@ -2,7 +2,7 @@
  * project     Solar charge controller with MPPT algorithm                      *
  *                                                                              *
  * file        main.cpp                                                         *
- * author      Ilya Galkin                                                      *
+ * author      @RedCommissary                                                   *
  * date        07.05.2020                                                       *
  * copyright   The MIT License (MIT)                                            *
  * brief       Main program body                                                *

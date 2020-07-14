@@ -2,7 +2,7 @@
  * class        DSP window filter with medium samling                           *
  *                                                                              *
  * file         FilterWindowMedium.h                                            *
- * author       Ilya Galkin                                                     *
+ * author       @RedCommissary                                                  *
  * date         23.06.2020                                                      *
  *                                                                              *
  ********************************************************************************/

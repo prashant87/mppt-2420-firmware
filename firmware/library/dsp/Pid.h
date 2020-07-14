@@ -2,7 +2,7 @@
  * class        PID controller with limit and anti-windup                       *
  *                                                                              *
  * file         Pid.h                                                           *
- * author       Ilya Galkin                                                     *
+ * author       @RedCommissary                                                  *
  * date         03.06.2020                                                      *
  *                                                                              *
  ********************************************************************************/
@@ -95,5 +95,3 @@ public:
         return outputPID;
     }
 };
-
-/********************************* END OF FILE **********************************/
