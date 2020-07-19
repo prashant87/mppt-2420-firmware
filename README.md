@@ -4,7 +4,7 @@
 
 ## Аппаратная часть проекта
 
-* [Solar charge controller with MPPT: 20A 60V input max](https://github.com/gardarica/mppt-2420-hardware)
+* [Solar charge controller with MPPT: 20A 60V input max](https://github.com/RedCommissary/mppt-2420-hardware)
 
 ## Структура проекта
 
