@@ -17,27 +17,37 @@
  * Variables 
  ********************************************************************************/
 
-float Application::UserSettings::outputVoltage = 0.0f;
-float Application::UserSettings::outputCurrent = 0.0f;
+float Application::outputVoltage = 0.0f;
+float Application::outputCurrent = 0.0f;
+
 uint16_t Application::dutyBuck = 0;
 bool Feedback::statusOutputDivider = false;
 
 PidController pidVoltageMode;
 PidController pidCurrentMode;
 
+Battery::TypeBattery Battery::typeBattery = Battery::TypeBattery::SLA;
+uint8_t Battery::numberOfCells = 0;
+float Battery::voltageCell = 0.0f;
+float Battery::chargeCurrent = 0.0f;
+
 /********************************************************************************
  * Class Application
  ********************************************************************************/
 
 void Application::Init() {
-    Application::UserSettings::outputVoltage = 14.4f;
-    Application::UserSettings::outputCurrent = 5.0f;
-    Feedback::SetOutputDivider(Feedback::Divider::div12V);
+    Battery::SetParameters(Battery::TypeBattery::SLA, _1S, 2.0f);
+    Application::outputVoltage = Battery::GetVoltage();
+    Application::outputCurrent = Battery::GetCurrent();
+
+    if (Application::outputVoltage > 16.0f) {
+        Feedback::SetOutputDivider(Feedback::Divider::div24V);
+    } else {
+        Feedback::SetOutputDivider(Feedback::Divider::div12V);
+    }
 
     Application::StartLowSpeedProcessing();
     Application::StartHighSpeedProcessing();
-
-    Led::On(Led::Color::yellow);
 }
 
 void Application::StartHighSpeedProcessing() {
@@ -63,7 +73,7 @@ void Application::StartLowSpeedProcessing() {
 }
 
 /********************************************************************************
- * Application
+ * High speed processing #1
  ********************************************************************************/
 
 void sTim3::handler (void) {
@@ -74,9 +84,9 @@ void sTim3::handler (void) {
     float outputVoltage = Feedback::GetOutputVoltage();
     float outputCurrent = Feedback::GetOutputCurrent();
 
-    if (outputVoltage < (Application::UserSettings::outputVoltage - 0.2f)) {
+    if (outputVoltage < (Application::outputVoltage - 0.2f)) {
         pidCurrentMode
-            .SetReference(Application::UserSettings::outputCurrent)
+            .SetReference(Application::outputCurrent)
             .SetSaturation(-40000, 40000)
             .SetFeedback(outputCurrent, 0.0002)
             .SetCoefficient(10, 0, 0, 0, 0)
@@ -84,7 +94,7 @@ void sTim3::handler (void) {
         resultPID = pidCurrentMode.Get();
     } else {
         pidVoltageMode
-            .SetReference(Application::UserSettings::outputVoltage)
+            .SetReference(Application::outputVoltage)
             .SetSaturation(-40000, 40000)
             .SetFeedback(outputVoltage, 0.0002)
             .SetCoefficient(50, 0, 0, 0, 0)
@@ -96,6 +106,11 @@ void sTim3::handler (void) {
     Hrpwm::SetDuty(Application::dutyBuck);
 }
 
+/********************************************************************************
+ * Low speed processing #1
+ ********************************************************************************/
+
 void sTim2::handler (void) {
     TIM2->SR &= ~TIM_SR_UIF;
+    Led::Toggle(Led::Color::yellow);
 }

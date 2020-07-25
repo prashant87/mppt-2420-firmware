@@ -22,6 +22,7 @@
 #include "Pid.h"
 
 #include "Feedback.h"
+#include "Battery.h"
 
 /********************************************************************************
  * Class Application
@@ -32,13 +33,10 @@
  ********************************************************************************/
 
 class Application {
-    public:
-        struct UserSettings {
-            static float outputVoltage;
-            static float outputCurrent;
-        };
-    
+    public:   
         static uint16_t dutyBuck;
+        static float outputVoltage;
+        static float outputCurrent;
         
     public:
         static void Init();
@@ -46,5 +44,4 @@ class Application {
     private:
         static void StartHighSpeedProcessing();
         static void StartLowSpeedProcessing();
-
 };
