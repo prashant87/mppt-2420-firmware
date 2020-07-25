@@ -76,12 +76,12 @@ class Feedback {
                 Adc::Status::stopOutputVoltage = true;
                 float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer, sizeWindow);
                 Adc::Status::stopOutputVoltage = false;
-                return (outputVoltage * sampleStepAdc * voltageDivOutput24V);
+                return (outputVoltage * sampleStepAdc * voltageDivOutput24V + staticErrorOutputVoltage);
             } else {
                 Adc::Status::stopOutputVoltage = true;
                 float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer, sizeWindow);
                 Adc::Status::stopOutputVoltage = false;
-                return (outputVoltage * sampleStepAdc * voltageDivOutput12V);
+                return (outputVoltage * sampleStepAdc * voltageDivOutput12V + staticErrorOutputVoltage);
             }
         }
 
@@ -93,11 +93,12 @@ class Feedback {
         }
 
     private:
-        constexpr static float sampleStepAdc = 0.000809f;
+        constexpr static float sampleStepAdc = 0.0008057f;
         constexpr static float gainCurrentSensor = 37.5f;
         constexpr static float currentShunt = 0.004f;
         constexpr static float voltageDivInput = 20.6078431f;
         constexpr static float voltageDivOutput12V = 5.1666666f;
         constexpr static float voltageDivOutput24V = 9.3333333f;
         constexpr static float staticErrorInputVoltage = 0.225f;
+        constexpr static float staticErrorOutputVoltage = 0.32f;
 };
