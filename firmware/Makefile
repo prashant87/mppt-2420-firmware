@@ -43,6 +43,7 @@ periphery/src/Hrpwm.cpp \
 periphery/src/Led.cpp \
 application/src/main.cpp \
 application/src/Application.cpp \
+application/src/Feedback.cpp \
 application/src/Battery.cpp
 
 #######################################

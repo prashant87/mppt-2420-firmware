@@ -42,55 +42,13 @@ class Feedback {
         constexpr static uint16_t sizeWindow = 20;
 
     public:
-        static void InitGpioDivider() {
-            Gpio::Init<14>(GPIOB, Gpio::Mode::output, Gpio::Type::PP);
-        }
+        static void InitGpioDivider();
+        static void SetOutputDivider(Divider divider);
 
-        static void SetOutputDivider (Divider divider) {
-            if (divider == Divider::div12V) { 
-                GPIOB->BSRR |= GPIO_BSRR_BR_14; 
-                statusOutputDivider = false;
-            }
-            if (divider == Divider::div24V) {
-                GPIOB->BSRR |= GPIO_BSRR_BS_14;
-                statusOutputDivider = true;
-            }
-        }      
-
-        static float GetInputVoltage() {
-            Adc::Status::stopInputVoltage = true;
-            float inputVoltage = FilterWindowMedium::Compute(Adc::inputVoltage, Adc::sizeBuffer, sizeWindow);
-            Adc::Status::stopInputVoltage = false;
-            return (inputVoltage * voltageDivInput * sampleStepAdc + staticErrorInputVoltage);
-        }
-
-        static float GetInputCurrent() {
-            Adc::Status::stopInputCurrent = true;
-            float inputCurrent = FilterWindowMedium::Compute(Adc::inputCurrent, Adc::sizeBuffer, sizeWindow);
-            Adc::Status::stopInputCurrent = false;
-            return (inputCurrent * sampleStepAdc / gainCurrentSensor / currentShunt);
-        }
-
-        static float GetOutputVoltage() {
-            if (statusOutputDivider) {
-                Adc::Status::stopOutputVoltage = true;
-                float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer, sizeWindow);
-                Adc::Status::stopOutputVoltage = false;
-                return (outputVoltage * sampleStepAdc * voltageDivOutput24V + staticErrorOutputVoltage);
-            } else {
-                Adc::Status::stopOutputVoltage = true;
-                float outputVoltage = FilterWindowMedium::Compute(Adc::outputVoltage, Adc::sizeBuffer, sizeWindow);
-                Adc::Status::stopOutputVoltage = false;
-                return (outputVoltage * sampleStepAdc * voltageDivOutput12V + staticErrorOutputVoltage);
-            }
-        }
-
-        static float GetOutputCurrent() {
-            Adc::Status::stopOutputCurrent = true;
-            float outputCurrent = FilterWindowMedium::Compute(Adc::outputCurrent, Adc::sizeBuffer, sizeWindow);
-            Adc::Status::stopOutputCurrent = false;
-            return (outputCurrent * sampleStepAdc / gainCurrentSensor / currentShunt);
-        }
+        static float GetInputVoltage();
+        static float GetInputCurrent();
+        static float GetOutputVoltage();
+        static float GetOutputCurrent();
 
     private:
         constexpr static float sampleStepAdc = 0.0008057f;
