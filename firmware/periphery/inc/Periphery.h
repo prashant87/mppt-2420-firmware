@@ -2,7 +2,7 @@
  * class        Setting periphery for MPPT controller                           *
  *                                                                              *
  * file         Periphery.h                                                     *
- * author       Ilya Galkin                                                     *
+ * author       @RedCommissary                                                  *
  * date         30.05.2020                                                      *
  *                                                                              *
  ********************************************************************************/
@@ -25,7 +25,7 @@
 class Periphery {
     public:
         static void Init() {
-            Periphery::ResetHrpwmChannel();
+            Periphery::ResetHrpwmIO();
             Clock::Init();
             Led::Init();
             Hrpwm::Init();
@@ -33,7 +33,7 @@ class Periphery {
         }
 
     private:
-        static void ResetHrpwmChannel() {
+        static void ResetHrpwmIO() {
             Gpio::Init<8,9>(GPIOA, Gpio::Mode::output, Gpio::Type::PP); 
             Gpio::Reset<8,9>(GPIOA);
         }

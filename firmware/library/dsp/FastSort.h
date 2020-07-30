@@ -2,7 +2,7 @@
  * class        Recursive array sorting                                         *
  *                                                                              *
  * file         FastSort.h                                                      *
- * author       Ilya Galkin                                                     *
+ * author       @RedCommissary                                                  *
  * date         01.07.2020                                                      *
  *                                                                              *
  ********************************************************************************/

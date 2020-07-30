@@ -2,7 +2,7 @@
  * class        Initialization and contoller LED                                *
  *                                                                              *
  * file         Led.h                                                           *
- * author       Ilya Galkin                                                     *
+ * author       @RedCommissary                                                  *
  * date         11.05.2020                                                      *
  *                                                                              *
  ********************************************************************************/
@@ -21,6 +21,7 @@
  * 
  * PB5  -   Green   -   Led status signal
  * PA15 -   Yellow  -   Led fault signal
+ * 
  ********************************************************************************/
 
 class Led {

@@ -2,7 +2,7 @@
  * project     Class for initialization clock system                            *
  *                                                                              *
  * file        Clock.h                                                          *
- * author      Ilya Galkin                                                      *
+ * author      @RedCommissary                                                   *
  * date        15.05.2020                                                       *
  *                                                                              *
  ********************************************************************************/

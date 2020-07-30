@@ -2,7 +2,7 @@
  * class        Initialization and read ADC                                     *
  *                                                                              *
  * file         Adc.h                                                           *
- * author       Ilya Galkin                                                     *
+ * author       @RedCommissary                                                  *
  * date         15.05.2020                                                      *
  *                                                                              *
  ********************************************************************************/

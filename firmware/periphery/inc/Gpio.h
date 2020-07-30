@@ -1,12 +1,10 @@
 /********************************************************************************
- * project     Solar charge controller with MPPT algorithm                      *
+ * class        Settings port I/O                                               *
  *                                                                              *
- * file        Gpio.h                                                           *
- * author      Ila Galkin                                                       *
- * date        11.05.2020                                                       *
- * copyright   The MIT License (MIT)                                            *
- * brief       class Gpio                                                       *
- *                                                                              *
+ * file         Gpio.h                                                          *
+ * author       @RedCommissary                                                  *
+ * date         11.05.2020                                                      *
+*                                                                               *
  ********************************************************************************/
 
 #pragma once
@@ -125,5 +123,3 @@ class Gpio {
     private:
 
 };
-
-/********************************* END OF FILE **********************************/

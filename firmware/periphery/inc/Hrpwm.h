@@ -1,9 +1,9 @@
 /********************************************************************************
- * project     Class for initialization and work with High Resolution PWM       *
+ * class        Initialization and work with High Resolution PWM                *
  *                                                                              *
- * file        Hrpwm.h                                                          *
- * author      Ilya Galkin                                                      *
- * date        13.05.2020                                                       *
+ * file         Hrpwm.h                                                         *
+ * author       @RedCommissary                                                  *
+ * date         13.05.2020                                                      *
  *                                                                              *
  ********************************************************************************/
 
@@ -34,7 +34,5 @@ class Hrpwm {
         static void InitGpio (void);
 
     private:
-        static const uint16_t periodHrpwm = 45000;     // Fsw = 100 kHz
+        static const uint16_t periodHrpwm = 45000;     // Fsw = 102 kHz
 };
-
-/********************************* END OF FILE **********************************/
