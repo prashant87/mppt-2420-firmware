@@ -35,6 +35,8 @@
 class Application {
     public:   
         static uint16_t dutyBuck;
+        static float inputVoltage;
+        static float inputCurrent;
         static float outputVoltage;
         static float outputCurrent;
         

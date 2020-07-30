@@ -47,13 +47,25 @@ class Battery {
         };
 
     public:
-        static void SetParameters(TypeBattery type, uint8_t cell, float current);
-        static float GetVoltage();
-        static float GetCurrent();
+        void SetParameters(TypeBattery type, uint8_t cell, float current);
+        float GetVoltage();
+        float GetCurrent();
 
     private:
-        static TypeBattery typeBattery;
-        static float voltageCell;
-        static uint8_t numberOfCells;
-        static float chargeCurrent;
+        struct {
+            TypeBattery typeBattery;
+            float voltageCell;
+            uint8_t numberOfCells;
+            float chargeCurrent;
+        } Parameters;
+
+        struct VoltageCell {
+            constexpr static float SLA = 14.4f;
+            constexpr static float AGM = 14.4f;
+            constexpr static float GEL = 14.4f;
+            constexpr static float Lithium = 4.2f;
+            constexpr static float LiPo = 4.2f;
+            constexpr static float LiFePO = 3.4f;
+            constexpr static float LTO = 2.4f;
+        };
 };

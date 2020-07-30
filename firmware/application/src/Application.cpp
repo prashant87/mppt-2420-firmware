@@ -1,13 +1,4 @@
 /********************************************************************************
- * class        Control and algorithms for application                          *
- *                                                                              *
- * file         Application.cpp                                                 *
- * author       @RedCommissary                                                  *
- * date         23.06.2020                                                      *
- *                                                                              *
- ********************************************************************************/
-
-/********************************************************************************
  * Include 
  ********************************************************************************/
 
@@ -17,34 +8,33 @@
  * Variables 
  ********************************************************************************/
 
+float Application::inputVoltage = 0.0f;
+float Application::inputCurrent = 0.0f;
 float Application::outputVoltage = 0.0f;
 float Application::outputCurrent = 0.0f;
-
 uint16_t Application::dutyBuck = 0;
-bool Feedback::statusOutputDivider = false;
 
 PidController pidVoltageMode;
 PidController pidCurrentMode;
 
-Battery::TypeBattery Battery::typeBattery = Battery::TypeBattery::SLA;
-uint8_t Battery::numberOfCells = 0;
-float Battery::voltageCell = 0.0f;
-float Battery::chargeCurrent = 0.0f;
+Battery UserBattery;
 
 /********************************************************************************
  * Class Application
  ********************************************************************************/
 
 void Application::Init() {
-    Battery::SetParameters(Battery::TypeBattery::SLA, _1S, 2.0f);
-    Application::outputVoltage = Battery::GetVoltage();
-    Application::outputCurrent = Battery::GetCurrent();
+    UserBattery.SetParameters(Battery::TypeBattery::SLA, _1S, 2.0f);
+    Application::outputVoltage = UserBattery.GetVoltage();
+    Application::outputCurrent = UserBattery.GetCurrent();
 
+    Feedback::InitGpioDivider();
     if (Application::outputVoltage > 16.0f) {
         Feedback::SetOutputDivider(Feedback::Divider::div24V);
     } else {
         Feedback::SetOutputDivider(Feedback::Divider::div12V);
     }
+
 
     Application::StartLowSpeedProcessing();
     Application::StartHighSpeedProcessing();

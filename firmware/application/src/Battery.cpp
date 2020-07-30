@@ -1,13 +1,4 @@
 /********************************************************************************
- * class        Settings type battery and charge algorithms                     *
- *                                                                              *
- * file         Battery.h                                                       *
- * author       @RedCommissary                                                  *
- * date         26.07.2020                                                      *
- *                                                                              *
- ********************************************************************************/
-
-/********************************************************************************
  * Include
  ********************************************************************************/
 
@@ -17,43 +8,43 @@
  * Class Battery
  ********************************************************************************/
 
-void Battery::SetParameters (TypeBattery type, uint8_t cell, float current) {
-    Battery::typeBattery = type;
-    Battery::numberOfCells = cell;
-    Battery::chargeCurrent = current;
+void Battery::SetParameters(TypeBattery type, uint8_t cell, float current) {
+    Parameters.typeBattery = type;
+    Parameters.numberOfCells = cell;
+    Parameters.chargeCurrent = current;
 }
 
 float Battery::GetVoltage() {
     float voltageCell = 0.0f;
 
-    switch (Battery::typeBattery) {
-        case Battery::TypeBattery::SLA:
-            voltageCell = 14.4f;
+    switch (Parameters.typeBattery) {
+        case TypeBattery::SLA:
+            voltageCell = VoltageCell::SLA;
             break;
-        case Battery::TypeBattery::AGM:
-            voltageCell = 14.4f;
+        case TypeBattery::AGM:
+            voltageCell = VoltageCell::AGM;
             break;
-        case Battery::TypeBattery::GEL:
-            voltageCell = 14.4f;
+        case TypeBattery::GEL:
+            voltageCell = VoltageCell::GEL;
             break;
-        case Battery::TypeBattery::Lithium:
-            voltageCell = 4.2f;
+        case TypeBattery::Lithium:
+            voltageCell = VoltageCell::Lithium;
             break;
-        case Battery::TypeBattery::LiPo:
-            voltageCell = 4.2f;
+        case TypeBattery::LiPo:
+            voltageCell = VoltageCell::LiPo;
             break;
-        case Battery::TypeBattery::LiFePO:
-            voltageCell = 3.4f;
+        case TypeBattery::LiFePO:
+            voltageCell = VoltageCell::LiFePO;
             break;
-        case Battery::TypeBattery::LTO:
-            voltageCell = 2.4f;
+        case TypeBattery::LTO:
+            voltageCell = VoltageCell::LTO;
             break;
     }
 
-    float outputVoltage = Battery::numberOfCells * voltageCell;
+    float outputVoltage = Parameters.numberOfCells * voltageCell;
     return (outputVoltage);
 }
 
 float Battery::GetCurrent() {
-    return chargeCurrent;
+    return Parameters.chargeCurrent;
 }
