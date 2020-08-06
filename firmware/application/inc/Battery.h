@@ -50,6 +50,7 @@ class Battery {
         void SetParameters(TypeBattery type, uint8_t cell, float current);
         float GetVoltage();
         float GetCurrent();
+        float GetDischargeLimit();
 
     private:
         struct {
@@ -59,13 +60,23 @@ class Battery {
             float chargeCurrent;
         } Parameters;
 
-        struct VoltageCell {
+        struct MaxVoltageCell {
             constexpr static float SLA = 14.4f;
             constexpr static float AGM = 14.4f;
             constexpr static float GEL = 14.4f;
             constexpr static float Lithium = 4.2f;
-            constexpr static float LiPo = 4.2f;
-            constexpr static float LiFePO = 3.4f;
+            constexpr static float LiPo = 4.15f;
+            constexpr static float LiFePO = 3.6f;
             constexpr static float LTO = 2.4f;
+        };
+
+        struct MinVoltageCell {
+            constexpr static float SLA = 10.2f;
+            constexpr static float AGM = 10.2f;
+            constexpr static float GEL = 10.2f;
+            constexpr static float Lithium = 3.0f;
+            constexpr static float LiPo = 3.3f;
+            constexpr static float LiFePO = 2.9f;
+            constexpr static float LTO = 1.6f;
         };
 };

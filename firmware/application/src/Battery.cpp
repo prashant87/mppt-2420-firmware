@@ -19,32 +19,61 @@ float Battery::GetVoltage() {
 
     switch (Parameters.typeBattery) {
         case TypeBattery::SLA:
-            voltageCell = VoltageCell::SLA;
+            voltageCell = MaxVoltageCell::SLA;
             break;
         case TypeBattery::AGM:
-            voltageCell = VoltageCell::AGM;
+            voltageCell = MaxVoltageCell::AGM;
             break;
         case TypeBattery::GEL:
-            voltageCell = VoltageCell::GEL;
+            voltageCell = MaxVoltageCell::GEL;
             break;
         case TypeBattery::Lithium:
-            voltageCell = VoltageCell::Lithium;
+            voltageCell = MaxVoltageCell::Lithium;
             break;
         case TypeBattery::LiPo:
-            voltageCell = VoltageCell::LiPo;
+            voltageCell = MaxVoltageCell::LiPo;
             break;
         case TypeBattery::LiFePO:
-            voltageCell = VoltageCell::LiFePO;
+            voltageCell = MaxVoltageCell::LiFePO;
             break;
         case TypeBattery::LTO:
-            voltageCell = VoltageCell::LTO;
+            voltageCell = MaxVoltageCell::LTO;
             break;
     }
 
-    float outputVoltage = Parameters.numberOfCells * voltageCell;
-    return (outputVoltage);
+    return (Parameters.numberOfCells * voltageCell);
 }
 
 float Battery::GetCurrent() {
     return Parameters.chargeCurrent;
+}
+
+float Battery::GetDischargeLimit() {
+    float voltageCell = 0.0f;
+
+    switch (Parameters.typeBattery) {
+        case TypeBattery::SLA:
+            voltageCell = MinVoltageCell::SLA;
+            break;
+        case TypeBattery::AGM:
+            voltageCell = MinVoltageCell::AGM;
+            break;
+        case TypeBattery::GEL:
+            voltageCell = MinVoltageCell::GEL;
+            break;
+        case TypeBattery::Lithium:
+            voltageCell = MinVoltageCell::Lithium;
+            break;
+        case TypeBattery::LiPo:
+            voltageCell = MinVoltageCell::LiPo;
+            break;
+        case TypeBattery::LiFePO:
+            voltageCell = MinVoltageCell::LiFePO;
+            break;
+        case TypeBattery::LTO:
+            voltageCell = MinVoltageCell::LTO;
+            break;
+    }
+
+    return (Parameters.numberOfCells * voltageCell);
 }
