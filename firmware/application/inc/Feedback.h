@@ -42,13 +42,16 @@ class Feedback {
         constexpr static uint16_t sizeWindow = 20;
 
     public:
-        static void InitGpioDivider();
-        static void SetOutputDivider(Divider divider);
+        static void SelectDivider (float voltage);
 
         static float GetInputVoltage();
         static float GetInputCurrent();
         static float GetOutputVoltage();
         static float GetOutputCurrent();
+
+    private:
+        static void InitGpioDivider();
+        static void SetOutputDivider(Divider divider);
 
     private:
         constexpr static float sampleStepAdc = 0.0008057f;

@@ -30,6 +30,16 @@ void Feedback::SetOutputDivider (Divider divider) {
     }
 } 
 
+void Feedback::SelectDivider (float voltage) {
+    InitGpioDivider();
+
+    if (voltage > 16.0f) {
+        Feedback::SetOutputDivider(Feedback::Divider::div24V);
+    } else {
+        Feedback::SetOutputDivider(Feedback::Divider::div12V);
+    }
+}
+
 float Feedback::GetInputVoltage() {
     Adc::Status::stopInputVoltage = true;
     float inputVoltage = FilterWindowMedium::Compute(Adc::inputVoltage, Adc::sizeBuffer, sizeWindow);
