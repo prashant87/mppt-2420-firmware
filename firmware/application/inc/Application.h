@@ -16,12 +16,7 @@
 #include "startupF334.h"
 
 #include "Led.h"
-#include "Adc.h"
-#include "Hrpwm.h"
-
-#include "Pid.h"
-
-#include "Feedback.h"
+#include "BuckConverter.h"
 #include "Battery.h"
 
 /********************************************************************************
@@ -32,18 +27,30 @@
  * 
  ********************************************************************************/
 
-class Application {
-    public:   
-        static uint16_t dutyBuck;
-        static float inputVoltage;
-        static float inputCurrent;
-        static float outputVoltage;
-        static float outputCurrent;
-        
+class Application {       
     public:
         static void Init();
 
     private:
-        static void StartHighSpeedProcessing();
-        static void StartLowSpeedProcessing();
+        static void StartHighSpeedProcessing() {
+            RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;     
+
+            TIM3->PSC = 36-1;
+            TIM3->ARR = 500;
+            TIM3->DIER |= TIM_DIER_UIE;
+            TIM3->CR1  |= TIM_CR1_CEN;
+
+            NVIC_EnableIRQ(TIM3_IRQn);
+        }
+
+        static void StartLowSpeedProcessing() {
+            RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;     
+
+            TIM2->PSC = 36000-1;
+            TIM2->ARR = 1000;
+            TIM2->DIER |= TIM_DIER_UIE;
+            TIM2->CR1  |= TIM_CR1_CEN;
+
+            NVIC_EnableIRQ(TIM2_IRQn);
+        }
 };
