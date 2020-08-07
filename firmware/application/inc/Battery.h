@@ -61,11 +61,11 @@ class Battery {
         } Parameters;
 
         struct MaxVoltageCell {
-            constexpr static float SLA = 14.4f;
-            constexpr static float AGM = 14.4f;
-            constexpr static float GEL = 14.4f;
-            constexpr static float Lithium = 4.2f;
-            constexpr static float LiPo = 4.15f;
+            constexpr static float SLA = 13.6f;
+            constexpr static float AGM = 13.6f;
+            constexpr static float GEL = 13.6f;
+            constexpr static float Lithium = 4.1f;
+            constexpr static float LiPo = 4.1f;
             constexpr static float LiFePO = 3.6f;
             constexpr static float LTO = 2.4f;
         };
@@ -74,8 +74,8 @@ class Battery {
             constexpr static float SLA = 10.2f;
             constexpr static float AGM = 10.2f;
             constexpr static float GEL = 10.2f;
-            constexpr static float Lithium = 3.0f;
-            constexpr static float LiPo = 3.3f;
+            constexpr static float Lithium = 3.2f;
+            constexpr static float LiPo = 3.2f;
             constexpr static float LiFePO = 2.9f;
             constexpr static float LTO = 1.6f;
         };
